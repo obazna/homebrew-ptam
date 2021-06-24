@@ -20,6 +20,7 @@ class Libcvd < Formula
   def install
        #-DBUILD_SHARED_LIBS=ON
        args = std_cmake_args + %W[
+            -DCVD_ENABLE_TESTS=OFF
             -DOPENGL_INCLUDE_DIR=#{Formula["mesa"].include}
             -DOPENGL_gl_LIBRARY=#{Formula["mesa"].lib}/#{shared_library("libGL")}
        ]
