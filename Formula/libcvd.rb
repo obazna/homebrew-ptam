@@ -27,16 +27,15 @@ class Libcvd < Formula
             -DOPENGL_gl_LIBRARY=#{Formula["mesa"].lib}/#{shared_library("libGL")}
        ]
        mkdir "build" do
-            on_macos do
+            #on_macos do
                #inreplace '../cmake/CVDFindAllDeps.cmake' do |s|
                #  s.gsub! "find_package(X11)", ""
                #end
                #inreplace '../cmake/CVDFindFFMPEG.cmake' do |s|
                #  s.gsub! "find_package(X11)", ""
                #end
-            end
+            #end
             system "cmake", "..", *args
-            system "make"
             system "make", "install"
        end
   end
