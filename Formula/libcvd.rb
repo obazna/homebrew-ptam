@@ -9,6 +9,8 @@ class Libcvd < Formula
   depends_on "pkg-config" => :build
   depends_on "cmake" => :build
 
+  depends_on 'libx11' => :recommended
+  depends_on 'mesa' => :recommended
   depends_on 'libpng' => :recommended
   depends_on 'jpeg' => :recommended
   depends_on 'libtiff' => :recommended
@@ -16,17 +18,22 @@ class Libcvd < Formula
   depends_on 'ffmpeg' => :recommended
 
   def install
-       args = std_cmake_args + []
+       args = std_cmake_args + %W[
+            -DBUILD_SHARED_LIBS=ON
+            -DOPENGL_INCLUDE_DIR=#{Formula["mesa"].include}
+            -DOPENGL_gl_LIBRARY=#{Formula["mesa"].lib}/#{shared_library("libGL")}
+       ]
        mkdir "build" do
             on_macos do
-               inreplace '../cmake/CVDFindAllDeps.cmake' do |s|
-                 s.gsub! "find_package(X11)", ""
-               end
-               inreplace '../cmake/CVDFindFFMPEG.cmake' do |s|
-                 s.gsub! "find_package(X11)", ""
-               end
+               #inreplace '../cmake/CVDFindAllDeps.cmake' do |s|
+               #  s.gsub! "find_package(X11)", ""
+               #end
+               #inreplace '../cmake/CVDFindFFMPEG.cmake' do |s|
+               #  s.gsub! "find_package(X11)", ""
+               #end
             end
             system "cmake", "..", *args
+            system "make"
             system "make", "install"
        end
   end
