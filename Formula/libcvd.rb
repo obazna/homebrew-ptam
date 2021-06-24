@@ -21,7 +21,7 @@ class Libcvd < Formula
        #-DBUILD_SHARED_LIBS=ON
        args = std_cmake_args + %W[
             -DCVD_ENABLE_TESTS=OFF
-            -DCVD_ENABLE_PROGS=ON
+            -DCVD_ENABLE_PROGS=OFF
             -DCVD_ENABLE_EXAMPLES=OFF
             -DOPENGL_INCLUDE_DIR=#{Formula["mesa"].include}
             -DOPENGL_gl_LIBRARY=#{Formula["mesa"].lib}/#{shared_library("libGL")}
